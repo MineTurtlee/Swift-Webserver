@@ -1,4 +1,4 @@
-# SwiftWebserver
+# Swift-Webserver
 
 💧 A project built with the Vapor web framework.
 
@@ -19,7 +19,11 @@ To execute tests, use the following command:
 swift test
 ```
 
-### See more
+### Credits
+
+- [Me!](https://github.com/Mineturtlee)
+
+### Vapor Links
 
 - [Vapor Website](https://vapor.codes)
 - [Vapor Documentation](https://docs.vapor.codes)
