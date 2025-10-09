@@ -3,6 +3,8 @@ import Logging
 import NIOCore
 import NIOPosix
 
+fileprivate let CustomLogger = Logger(label: "Swift-Webserver")
+
 @main
 enum Entrypoint {
     static func main() async throws {
@@ -10,6 +12,17 @@ enum Entrypoint {
         try LoggingSystem.bootstrap(from: &env)
         
         let app = try await Application.make(env)
+        app.http.server.configuration.hostname = "0.0.0.0"
+        if let portString = Environment.get("port"), let port = Int(portString) {
+            app.http.server.configuration.port = port
+        } else {
+            CustomLogger.error("Invalid port, exiting")
+            exit(1)
+        }
+        if let serverName = Environment.get("serverName") {
+            app.http.server.configuration.serverName = serverName
+        }
+        
 
         // This attempts to install NIO as the Swift Concurrency global executor.
         // You can enable it if you'd like to reduce the amount of context switching between NIO and Swift Concurrency.
