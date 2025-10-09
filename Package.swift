@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftWebserver",
+    name: "Swift-Webserver",
     platforms: [
        .macOS(.v13),
        .iOS(.v13)
@@ -15,7 +15,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "SwiftWebserver",
+            name: "Swift-Webserver",
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "NIOCore", package: "swift-nio"),
@@ -24,9 +24,9 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "SwiftWebserverTests",
+            name: "Swift-WebserverTests",
             dependencies: [
-                .target(name: "SwiftWebserver"),
+                .target(name: "Swift-Webserver"),
                 .product(name: "VaporTesting", package: "vapor"),
             ],
             swiftSettings: swiftSettings

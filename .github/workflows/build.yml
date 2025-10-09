@@ -1,0 +1,91 @@
+name: Test-Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  apple:
+    name: Build (macOS)
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: switch
+        run: |
+          ls /Applications
+          sudo xcode-select -s /Applications/Xcode_16.4.app
+      - name: Set Default Scheme
+        run: |
+          scheme_list=$(xcodebuild -list -json | tr -d "\n")
+          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
+          echo $default | cat >default
+          echo Using default scheme: $default
+      - name: Build
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
+          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
+          xcodebuild build -scheme "$scheme" -"$filetype_parameter" "$file_to_build"
+      - name: e
+        run: |
+          cd /Users/runner/Library/Developer/Xcode/DerivedData/Swift-Webserver-eporduquutuborbixupfllfbbqog/Build/Products/Debug
+
+          ls
+          echo "BUILD_ID=$(date +%s)" >> $GITHUB_ENV
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macOS-${{ env.BUILD_ID }}
+          path: /Users/mineturtlee/Library/Developer/Xcode/DerivedData/Swift-Webserver-eporduquutuborbixupfllfbbqog/Build/Products/Debug/Swift-Webserver
+
+  linux:
+    name: Build (Linux)
+    runs-on: ubuntu-latest
+    container:
+      image: swift:6.1-focal
+
+    steps:
+      - uses: actions/checkout@v4
+      # - uses: beeauvin/swiftly-swift@v1
+        # with:
+          # swift-version: 6.1
+      - name: Build
+        working-directory: Swiftified-CLI
+        run: |
+          swift --version
+          swift build -Xswiftc -static-stdlib
+      - name: Debug
+        working-directory: Swiftified-CLI
+        run: |
+          cd .build
+          cd x86_64-unknown-linux-gnu
+          cd debug
+          ls
+          echo "BUILD_ID=$(date +%s)" >> $GITHUB_ENV
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Linux-${{ env.BUILD_ID }}
+          path: ${{ GITHUB.WORKSPACE }}/Swiftified-CLI/.build/x86_64-unknown-linux-gnu/debug/Swift-Webserver
+
+  maccli:
+    name: Build CLI (macOS)
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: |
+          cd ${{ GITHUB.WORKSPACE }}/Swiftified-CLI
+          swift build --arch arm64 --arch x86_64
+          echo "BUILD_ID=$(date +%s)" >> $GITHUB_ENV
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macOS CLI-${{ env.BUILD_ID }}
+          path: ${{ GITHUB.WORKSPACE }}/Swiftified-CLI/.build/apple/Products/Debug/Swift-Webserver
