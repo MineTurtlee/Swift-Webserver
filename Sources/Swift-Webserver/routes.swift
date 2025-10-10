@@ -2,7 +2,17 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req async in
-        "It works!"
+        HTML(value: """
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Mineturtlee's Website</title>
+</head>
+<body>
+<p align=center>Hello world!</p>
+</body>
+</html>        
+""")
     }
 
     app.get("hello") { req async -> String in
