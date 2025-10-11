@@ -7,37 +7,6 @@ on:
     branches: [ "main" ]
 
 jobs:
-  apple:
-    name: Build (macOS)
-    runs-on: macos-15
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app
-
-      - name: Build (Xcode)
-        run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then 
-            filetype_parameter="workspace"
-            file_to_build="`ls -A | grep -i \\.xcworkspace\$`"
-          else 
-            filetype_parameter="project"
-            file_to_build="`ls -A | grep -i \\.xcodeproj\$`"
-          fi
-          file_to_build=$(echo $file_to_build | awk '{$1=$1;print}')
-          xcodebuild build -scheme "Swift-Webserver" -"$filetype_parameter" "$file_to_build"
-
-      - name: Upload macOS Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: macOS-${{ github.run_number }}
-          path: |
-            /Users/runner/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug/Swift-Webserver
-
   linux:
     name: Build (Linux)
     runs-on: ubuntu-latest
@@ -54,8 +23,8 @@ jobs:
           name: Linux-${{ github.run_number }}
           path: .build/x86_64-unknown-linux-gnu/debug/Swift-Webserver
 
-  maccli:
-    name: Build CLI (macOS)
+  mac:
+    name: Build (macOS)
     runs-on: macos-15
 
     steps:
