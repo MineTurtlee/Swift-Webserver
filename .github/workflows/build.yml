@@ -26,14 +26,26 @@ jobs:
   mac:
     name: Build (macOS)
     runs-on: macos-15
-
     steps:
       - uses: actions/checkout@v4
-      - name: Build CLI
+
+      - name: Build arm64
+        run: swift build --arch arm64 -c debug
+
+      - name: Build x86_64
+        run: swift build --arch x86_64 -c debug
+
+      - name: Merge universal binary
         run: |
-          swift build --arch arm64 --arch x86_64
-      - name: Upload CLI Artifact
+          mkdir -p universal
+          lipo -create \
+            .build/arm64-apple-macosx/debug/Swift-Webserver \
+            .build/x86_64-apple-macosx/debug/Swift-Webserver \
+            -output universal/Swift-Webserver
+          file universal/Swift-Webserver
+
+      - name: Upload Universal Binary
         uses: actions/upload-artifact@v4
         with:
           name: macOS-CLI-${{ github.run_number }}
-          path: .build/apple/Products/Debug/Swift-Webserver
+          path: universal/Swift-Webserver
