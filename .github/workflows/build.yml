@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Resources-${{ github.run_number }}
-          path: .build/**/debug/Swift-Webserver_Swift-Webserver.bundle
+          path: .build/x86_64-unknown-linux-gnu/debug/Swift-Webserver_Swift-Webserver.bundle
 
   mac:
     name: Build (macOS)
