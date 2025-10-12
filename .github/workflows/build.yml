@@ -49,3 +49,9 @@ jobs:
         with:
           name: macOS-CLI-${{ github.run_number }}
           path: universal/Swift-Webserver
+
+      - name: Upload resources
+        uses: actions/upload-artifact@v4
+        with:
+          name: Resources
+          path: .build/x86_64-apple-macosx/debug/Swift-Webserver_Swift-Webserver.resources
