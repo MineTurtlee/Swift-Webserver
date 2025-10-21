@@ -10,47 +10,49 @@ import Logging
 
 fileprivate let CustomLogger = Logger(label: "Swift-Webserver")
 
-struct midlwaer: Middleware {
+struct StaticBundleMiddleware: Middleware {
     let bundle: Bundle
 
     func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
         // Normalize path
         var path = request.url.path
         if path.hasPrefix("/") { path.removeFirst() }
+        if path.isEmpty { path = "index.html" }
 
-        // split
-        let url = URL(fileURLWithPath: path)
-        let fileName = url.deletingPathExtension().lastPathComponent
-        let fileExtension = url.pathExtension.isEmpty ? nil : url.pathExtension
-
-        // finding the file
-        if let fileURL = bundle.url(forResource: fileName,
-                                    withExtension: fileExtension,
-                                    subdirectory: "Public") {
-            do {
-                let data = try Data(contentsOf: fileURL)
-                var response = Response(status: .ok, body: .init(data: data))
-
-                // cotnetn type
-                if let ext = fileExtension,
-                   let type = HTTPMediaType.fileExtension(ext) {
-                    response.headers.contentType = type
-                }
-
-                // some cache header control thingy
-                response.headers.add(name: .cacheControl, value: "public, max-age=3600")
-
-                CustomLogger.info("Served embedded resource: \(fileURL.lastPathComponent)")
-                return request.eventLoop.makeSucceededFuture(response)
-            } catch {
-                CustomLogger.error("Error loading resource: \(error)")
-                return request.eventLoop.makeFailedFuture(error)
-            }
+        // Locate the Public directory inside the bundle
+        guard let publicDir = bundle.resourceURL?.appendingPathComponent("Public") else {
+            CustomLogger.error("No Public directory in bundle")
+            return next.respond(to: request)
         }
-        else {
-            // not found case
+
+        // Build full file URL and normalize
+        let fileURL = publicDir.appendingPathComponent(path).standardizedFileURL
+
+        // Prevent directory traversal
+        guard fileURL.path.hasPrefix(publicDir.path) else {
+            CustomLogger.warning("Blocked directory traversal attempt: \(path)")
+            return next.respond(to: request)
+        }
+
+        // Check existence
+        guard FileManager.default.fileExists(atPath: fileURL.path) else {
             CustomLogger.warning("Resource not found in embedded bundle: \(path)")
             return next.respond(to: request)
+        }
+
+        // Stream the file (this already returns EventLoopFuture<Response>)
+        let futureResponse = request.fileio.streamFile(at: fileURL.path)
+
+        // Add headers once the response is ready
+        return futureResponse.map { response in
+            if let type = HTTPMediaType.fileExtension(fileURL.pathExtension) {
+                response.headers.contentType = type
+            } else {
+                response.headers.contentType = .plainText
+            }
+            response.headers.add(name: .cacheControl, value: "public, max-age=3600")
+            CustomLogger.info("Served embedded resource: \(fileURL.lastPathComponent)")
+            return response
         }
     }
 }
