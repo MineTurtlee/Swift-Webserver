@@ -22,9 +22,9 @@ let package = Package(
                 .product(name: "NIOPosix", package: "swift-nio"),
             ],
             resources: [
-                .process("../../Public")
+                .process("Public")
             ],
-            swiftSettings: swiftSettings
+            // swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "Swift-WebserverTests",
@@ -32,11 +32,11 @@ let package = Package(
                 .target(name: "Swift-Webserver"),
                 .product(name: "VaporTesting", package: "vapor"),
             ],
-            swiftSettings: swiftSettings
+            // swiftSettings: swiftSettings
         )
     ]
 )
 
-var swiftSettings: [SwiftSetting] { [
+/* var swiftSettings: [SwiftSetting] { [
     .enableUpcomingFeature("ExistentialAny"),
-] }
+] } */
