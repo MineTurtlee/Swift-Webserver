@@ -28,7 +28,7 @@ struct StaticBundleMiddleware: Middleware {
             // .standardizedFileURL,
            // FileManager.default.fileExists(atPath: fileURL.path) {
         if let fileURL = bundle.url(forResource: path, withExtension: nil),
-            FileManager.default.fileExists(atPath: fileURL.path){
+            FileManager.default.isReadableFile(atPath: fileURL.path) { 
 
             do {
                 let data = try Data(contentsOf: fileURL)
