@@ -29,7 +29,6 @@ struct StaticBundleMiddleware: Middleware {
            // FileManager.default.fileExists(atPath: fileURL.path) {
         if let fileURL = bundle.url(forResource: path, withExtension: nil),
             let values = try? fileURL.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey]),
-            values.isDirectory == false,
             values.isRegularFile == true {
 
 
