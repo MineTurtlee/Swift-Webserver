@@ -28,8 +28,10 @@ struct StaticBundleMiddleware: Middleware {
             // .standardizedFileURL,
            // FileManager.default.fileExists(atPath: fileURL.path) {
         if let fileURL = bundle.url(forResource: path, withExtension: nil),
-            FileManager.default.isReadableFile(atPath: fileURL.path),
-            (try? fileURL.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == false { 
+            let values = try? fileURL.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey]),
+            values.isDirectory == false,
+            values.isRegularFile == true {
+
 
             do {
                 let data = try Data(contentsOf: fileURL)
