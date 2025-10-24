@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Swift-Webserver}",
+            "name": "Debug Swift-Webserver",
+            "program": "${workspaceFolder:Swift-Webserver}/.build/debug/Swift-Webserver",
+            "preLaunchTask": "swift: Build Debug Swift-Webserver"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Swift-Webserver}",
+            "name": "Release Swift-Webserver",
+            "program": "${workspaceFolder:Swift-Webserver}/.build/release/Swift-Webserver",
+            "preLaunchTask": "swift: Build Release Swift-Webserver"
+        }
+    ]
+}
