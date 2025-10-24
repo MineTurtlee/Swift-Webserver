@@ -22,7 +22,7 @@ let package = Package(
                 .product(name: "NIOPosix", package: "swift-nio"),
             ],
             resources: [
-                .process("../../Public")
+                .process("Public")
             ],
             swiftSettings: swiftSettings
         ),
