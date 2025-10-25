@@ -22,11 +22,11 @@ jobs:
         with:
           name: Linux-${{ github.run_number }}
           path: .build/x86_64-unknown-linux-gnu/debug/Swift-Webserver
-      - name: Upload Resources
-        uses: actions/upload-artifact@v4
-        with:
-          name: Linux-Resources-${{ github.run_number }}
-          path: ${{ github.workspace }}/.build/x86_64-unknown-linux-gnu/debug/Swift-Webserver_Swift-Webserver.resources
+      # - name: Upload Resources
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: Linux-Resources-${{ github.run_number }}
+          # path: ${{ github.workspace }}/.build/x86_64-unknown-linux-gnu/debug/Swift-Webserver_Swift-Webserver.resources
 
   mac:
     name: Build (macOS)
@@ -55,8 +55,8 @@ jobs:
           name: macOS-CLI-${{ github.run_number }}
           path: universal/Swift-Webserver
 
-      - name: Upload Bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: macOS-Bundle-${{ github.run_number }}
-          path: .build/x86_64-apple-macosx/debug/Swift-Webserver_Swift-Webserver.bundle
+      # - name: Upload Bundle
+        # uses: actions/upload-artifact@v4
+        # with:
+          # name: macOS-Bundle-${{ github.run_number }}
+          # path: .build/x86_64-apple-macosx/debug/Swift-Webserver_Swift-Webserver.bundle
