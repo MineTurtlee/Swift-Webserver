@@ -42,7 +42,9 @@ extension ReworkedHTML: AsyncResponseEncodable {
                     <meta property="og:title" content="\(title)" />
                     <meta property="og:description" content="\(desc)" />
                     <meta property="og:type" content="\(contentType)" />
-                    <link rel="stylesheet prefetch" href="https://gist.githubusercontent.com/mfd/614e2e80a22b878bde63cb471cbe677e/raw/eef2aabfd0d588d43285431186a0cf70305ceb80/sanfrancisco-font.css">
+                    <link rel="stylesheet prefetch" href="/fonts.css">
+                    <link rel="stylesheet prefetch" href="/styles.css">
+                    <link rel="stylesheet prefetch" href="/misc.css">
                 </head>
                 <body>
                     \(body)

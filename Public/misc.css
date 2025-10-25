@@ -1,0 +1,63 @@
+.align-center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+body {
+  background-color: white;
+  color: black;
+}
+
+.dark-mode {
+  background-color: #010409;
+  color: white;
+}
+
+/* body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+*/
+
+
+.dark-mode .button,
+.dark-mode input,
+.dark-mode .lolz {
+  border: 1px solid white;
+  background-color: #010409; /* Optional: keep background transparent */
+  color: white; /* Optional: ensure text is visible */
+}
+    
+.clock {
+  background: linear-gradient(to right, #fffd8f, #8d8325, #fffd8f);
+  background-size: 200% 100%;
+}
+
+.oppositeclock {
+  background: linear-gradient(to right, #8d8325, #fffd8f, #8d8325);
+  background-size: 200% 100%;
+}
+
+.clock:hover {
+    animation: gradientMove 10s linear infinite;
+}
+
+.oppositeclock:hover{
+    animation: gradientMove 10s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
