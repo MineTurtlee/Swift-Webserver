@@ -11,8 +11,7 @@ jobs:
     name: Build (Linux)
     runs-on: ubuntu-latest
     container:
-      image: hgiddens/swift-static:6.1.2
-      
+      image: swiftlang/swift:nightly-noble
     steps:
       - uses: actions/checkout@v4
       - name: what??
