@@ -74,16 +74,8 @@ actor DownloaderStats {
         return FM.currentDirectoryPath
     }
     
-    func doesFileExist(atPath: String) -> Bool {
-        return FM.fileExists(atPath: targetURL.path)
-    }
-    
-    func removeFile(atPath: String) throws {
-        try FM.removeItem(atPath: targetURL.path)
-    }
-    
-    func createDirectory(at: URL, withIntermediateDirectories: Bool, attributes: [FileAttributeKey:Any]?) throws {
-        try FM.createDirectory(at: at, withIntermediateDirectories: withIntermediateDirectories, attributes: attributes)
+    func incrementFC() async {
+        await stats.incrementFileCount()
     }
 }
 
@@ -94,19 +86,23 @@ class Downloader {
     init(_ ghURL: URL, _ targerDir: String) async throws {
         let repoinfo = try Downloader.parse(ghURL)
         await stats.setRepoInfo(repoinfo)
-        let currentDir = await URL(fileURLWithPath: stats.getCurrentDir())
-        await stats.setTargetURL(currentDir.appendingPathComponent(targerDir))
+        let targetURL = URL(fileURLWithPath: await stats.getCurrentDir())
+        await stats.setTargetURL(targetURL.appendingPathComponent(targerDir))
         // self.finalURL = URL(string: "\(self.repoinfo.APIPrefix)/\(self.repoinfo.path)?ref=\(self.repoinfo.branch)")!
-        if await stats.doesFileExist(atPath: stats.targetURL.path) {
+        if await FileManager.default.fileExists(atPath: stats.targetURL.path) {
             do {
-                try await stats.removeFile(atPath: stats.targetURL.path)
+                let targetURL = await stats.getTargetURL()
+                if FileManager.default.fileExists(atPath: targetURL.path) {
+                    try FileManager.default.removeItem(at: targetURL)
+                }
             } catch {
                 throw DownloaderErrors.Unknown("Folder removal error - do you have permissions to do so?")
             }
         }
         
         do {
-            try await stats.createDirectory(at: stats.targetURL, withIntermediateDirectories: true, attributes: nil)
+            let targetURL = await stats.getTargetURL()
+            try FileManager.default.createDirectory(at: targetURL, withIntermediateDirectories: true)
         } catch {
             throw DownloaderErrors.Unknown("Folder creation error..")
         }
@@ -120,7 +116,7 @@ class Downloader {
     public func downloadDirectory() async throws {
         let repoinfo = await stats.getRepoInfo()
         logger.info("Starting download for repository: \(repoinfo.repository) / \(repoinfo.branch) / \(repoinfo.path)")
-        try await mapContent(directoryPath: stats.repoinfo.path, stats: stats)
+        try await mapContent(directoryPath: repoinfo.path, apiprefix: repoinfo.APIPrefix, branch: repoinfo.branch, targetURL: await stats.getTargetURL(), stats: stats)
         let downloadedFiles = await stats.stats.getFileCount()
         logger.info("download complete: \(downloadedFiles) files downloaded.")
     }
@@ -160,12 +156,13 @@ class Downloader {
     }
 }
 
-func mapContent(directoryPath: String, stats: DownloaderStats) async throws {
+func mapContent(directoryPath: String, apiprefix: String, branch: String, targetURL: URL, stats: DownloaderStats) async throws {
     // var request = URLRequest(url: self.finalURL)
-    guard var components = await URLComponents(string: "\(stats.repoinfo.APIPrefix)/\(directoryPath)") else {
+    
+    guard var components = URLComponents(string: "\(apiprefix)/\(directoryPath)") else {
         throw DownloaderErrors.ConstructionError("Failed to build API URL for path: \(directoryPath)")
     }
-    components.queryItems = await [URLQueryItem(name: "ref", value: stats.repoinfo.branch)]
+    components.queryItems = [URLQueryItem(name: "ref", value: branch)]
     guard let url = components.url else {
         throw DownloaderErrors.ConstructionError("Invalid URL components.")
     }
@@ -187,25 +184,40 @@ func mapContent(directoryPath: String, stats: DownloaderStats) async throws {
     
     let contents = try JSONDecoder().decode([GHContent].self, from: data)
     
+    let repoinfoPath = await stats.getRepoInfo().path
+    
     try await withThrowingTaskGroup(of: Void.self) { group in
         for item in contents {
             switch item.type {
             case "dir":
                 let nextPath = item.path
+                let apiPrefix = apiprefix
+                let branchName = branch
+                let targetDir = targetURL
                 group.addTask {
-                    try await mapContent(directoryPath: nextPath, stats: stats)
+                    try await mapContent(directoryPath: nextPath,
+                                         apiprefix: apiPrefix,
+                                         branch: branchName,
+                                         targetURL: targetDir.appendingPathComponent(String(nextPath.split(separator: "/").last!)),
+                                         stats: stats)
                 }
 
             case "file":
-                let fileContent = item
-                let downloadStats = await stats.stats
-                let stats = stats
-
-                group.addTask {
-                    let localFilePath = try await calculateLocalPath(for: fileContent, stats: stats)
-                    try await downloadFile(content: fileContent, localPath: localFilePath)
-                    await downloadStats.incrementFileCount()
+                    let fileContent = item
+                    let localTargetURL = targetURL
+                let resourceRoot = repoinfoPath.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+                let fullPath = fileContent.path
+                guard fullPath.hasPrefix(resourceRoot) else {
+                    throw DownloaderErrors.AppError("Path mismatch.")
                 }
+                let relativePath = fullPath.dropFirst(resourceRoot.count).trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+                let localFilePath = targetURL.appendingPathComponent(String(relativePath))
+
+
+                    group.addTask {
+                        try await downloadFile(content: fileContent, localPath: localFilePath)
+                        await stats.incrementFC()
+                    }
             default:
                 continue
             }
