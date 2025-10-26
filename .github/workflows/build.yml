@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: what??
-        run: sudo apt-get install libicu-dev -y
+        run: apt-get install libicu-dev -y
       - name: Build
         run: |
           export LD=/usr/bin/ld
