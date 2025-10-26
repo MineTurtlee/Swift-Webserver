@@ -15,8 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: what??
+        run: sudo apt-get install libicu-dev -y
       - name: Build
-        run: swift build -Xswiftc -static-stdlib -Xswiftc -static-executable
+        run: |
+          export LD=/usr/bin/ld
+          swift build -Xswiftc -static-stdlib -Xswiftc -static-executable -Xlinker -no-pie
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v4
         with:
