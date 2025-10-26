@@ -3,7 +3,6 @@ import Foundation
 import FoundationNetworking
 #endif
 import Logging
-import Combine
 
 fileprivate let logger = Logger(label: "Swift-Webserver.Downloader")
 
