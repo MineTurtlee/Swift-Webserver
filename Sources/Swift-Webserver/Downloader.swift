@@ -46,7 +46,7 @@ actor DownloadStats {
     }
 }
 
-class DownloaderStats: ObservableObject, @unchecked Sendable {
+class DownloaderStats: @unchecked Sendable {
     var repoinfo: RepoIn4!
     var FM = FileManager.default
     var targetURL: URL!
