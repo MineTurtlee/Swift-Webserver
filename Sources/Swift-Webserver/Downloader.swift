@@ -211,7 +211,9 @@ func mapContent(directoryPath: String, apiprefix: String, branch: String, target
                 guard fullPath.hasPrefix(resourceRoot) else {
                     throw DownloaderErrors.AppError("Path mismatch.")
                 }
-                let relativePath = fullPath.dropFirst(resourceRoot.count).trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+                let resourceRootComponents = URL(fileURLWithPath: resourceRoot).pathComponents
+                let fullPathComponents = URL(fileURLWithPath: fullPath).pathComponents
+                let relativePath = fullPathComponents.dropFirst(resourceRootComponents.count).joined(separator: "/")
                 let localFilePath = targetURL.appendingPathComponent(String(relativePath))
 
 
