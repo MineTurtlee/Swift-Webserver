@@ -184,7 +184,8 @@ func mapContent(directoryPath: String, apiprefix: String, branch: String, target
     
     let contents = try JSONDecoder().decode([GHContent].self, from: data)
     
-    let repoinfoPath = await stats.getRepoInfo().path
+    let repoinfo = await stats.getRepoInfo()
+    let repoinfoPath = repoinfo.path
     
     try await withThrowingTaskGroup(of: Void.self) { group in
         for item in contents {
