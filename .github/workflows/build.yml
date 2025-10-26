@@ -11,8 +11,8 @@ jobs:
     name: Build (Linux)
     runs-on: ubuntu-latest
     container:
-      image: swift:6.0-focal
-
+      image: swiftlang/swift:nightly-static
+      
     steps:
       - uses: actions/checkout@v4
       - name: what??
