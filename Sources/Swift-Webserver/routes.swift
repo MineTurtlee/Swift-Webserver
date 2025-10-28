@@ -15,7 +15,7 @@ func routes(_ app: Application) throws {
             """, desc: "Just a silly website made by Mineturtle2 | Root", contentType: "website")
     }
     
-    app.on(.brew, "brew", ":type") { req async in
+    app.on(.brew, "brew", ":type") { req async -> Response in
         guard let type = req.parameters.get("type") else {
             return Response(status: .badRequest)
         }
@@ -26,12 +26,6 @@ func routes(_ app: Application) throws {
             return Response(status: HTTPResponseStatus(statusCode: 418, reasonPhrase: "I'm a teapot"))
         default:
             return Response(status: .notFound)
-        }
-    }
-
-    app.subdomain("status") { status in
-        status.get { req async in
-            return "hello"
         }
     }
 }
