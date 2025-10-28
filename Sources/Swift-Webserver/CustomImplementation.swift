@@ -66,3 +66,27 @@ extension JSON: AsyncResponseEncodable {
         return .init(status: .ok, headers: headers, body: .init(string: jsonString))
     }
 }
+
+extension HTTPMethod {
+    static let brew = HTTPMethod(rawValue: "BREW")
+}
+
+extension RoutesBuilder {
+    func subdomain(_ name: String, use builder: (any RoutesBuilder) -> Void) {
+        let group = self.grouped(SubdomainMiddleware(match: name))
+        builder(group)
+    }
+}
+
+struct SubdomainMiddleware: Middleware {
+    let match: String
+
+    func respond(to req: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
+        guard let host = req.headers.first(name: .host),
+              host.lowercased().hasPrefix(match + ".") else {
+            return req.eventLoop.makeFailedFuture(Abort(.notFound))
+        }
+        return next.respond(to: req)
+    }
+}
+

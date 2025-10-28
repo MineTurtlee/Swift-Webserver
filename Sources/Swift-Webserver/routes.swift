@@ -3,11 +3,35 @@ import Vapor
 func routes(_ app: Application) throws {
     app.get { req async in
         ReworkedHTML(title: "Mineturtlee's server", body: """
-            <p align=center>hello</p>
-            """, desc: "Just a silly website made by Mineturtle2", contentType: "website")
+            <header class="topbar">
+              <div class="logo">
+                <a href="/">Mineturtlee</a>
+              </div>
+              <nav class="nav">
+                <a href="/">Home</a>
+              </nav>
+            </header>
+            <h3 class="indented">Mineturtlee's website</h3>
+            """, desc: "Just a silly website made by Mineturtle2 | Root", contentType: "website")
+    }
+    
+    app.on(.brew, "brew", ":type") { req async in
+        guard let type = req.parameters.get("type") else {
+            return Response(status: .badRequest)
+        }
+        switch type {
+        case "tea":
+            return Response(status: .ok)
+        case "coffee":
+            return Response(status: HTTPResponseStatus(statusCode: 418, reasonPhrase: "I'm a teapot"))
+        default:
+            return Response(status: .notFound)
+        }
     }
 
-    app.get("hello") { req async -> String in
-        "Hello, world!"
+    app.subdomain("status") { status in
+        status.get { req async in
+            return "hello"
+        }
     }
 }
