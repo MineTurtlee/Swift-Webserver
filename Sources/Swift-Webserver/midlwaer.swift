@@ -50,3 +50,9 @@ struct StaticBundleMiddleware: Middleware {
         }
     }
 }
+
+struct SiteMiddleware: Middleware {
+    func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
+        
+    }
+}

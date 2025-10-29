@@ -71,21 +71,33 @@ extension HTTPMethod {
     static let brew = HTTPMethod(rawValue: "BREW")
 }
 
-extension RoutesBuilder {
-    func subdomain(_ name: String, use builder: (any RoutesBuilder) -> Void) {
-        let group = self.grouped(SubdomainMiddleware(match: name))
-        builder(group)
-    }
-}
 
 struct SubdomainMiddleware: Middleware {
     let match: String
 
     func respond(to req: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
-        guard let host = req.headers.first(name: .host),
-              host.lowercased().hasPrefix(match + ".") else {
-            return req.eventLoop.makeFailedFuture(Abort(.notFound))
+        guard var host = req.headers.first(name: .host)?.lowercased() else {
+            return req.eventLoop.makeFailedFuture(Abort(.badRequest, reason: "Missing host header"))
         }
+        
+        if let colon = host.firstIndex(of: ":") {
+            host = String(host[..<colon])
+        }
+        
+        if match.isEmpty {
+            if host == "localhost" || host == "[::1]" || host == "127.0.0.1" {
+                return next.respond(to: req)
+            }
+            let parts = host.split(separator: ".")
+            if parts.count > 2 {
+                return req.eventLoop.makeFailedFuture(Abort(.badGateway, reason: "Server error"))
+            }
+        } else {
+            guard host.hasPrefix(match + ".") else {
+                return req.eventLoop.makeFailedFuture(Abort(.notFound))
+            }
+        }
+        
         return next.respond(to: req)
     }
 }

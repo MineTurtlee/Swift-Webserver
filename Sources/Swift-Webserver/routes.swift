@@ -1,7 +1,8 @@
 import Vapor
 
 func routes(_ app: Application) throws {
-    app.get { req async in
+    let root = app.grouped("")
+    root.get { req async in
         ReworkedHTML(title: "Mineturtlee's server", body: """
             <header class="topbar">
               <div class="logo">
@@ -15,7 +16,7 @@ func routes(_ app: Application) throws {
             """, desc: "Just a silly website made by Mineturtle2 | Root", contentType: "website")
     }
     
-    app.on(.brew, "brew", ":type") { req async -> Response in
+    root.on(.brew, "brew", ":type") { req async -> Response in
         guard let type = req.parameters.get("type") else {
             return Response(status: .badRequest)
         }
@@ -27,5 +28,10 @@ func routes(_ app: Application) throws {
         default:
             return Response(status: .notFound)
         }
+    }
+    
+    let status = app.grouped("status.mineturtle2.dpdns.org")
+    status.get { req async in
+        return Response(status: .ok)
     }
 }
