@@ -30,7 +30,7 @@ func routes(_ app: Application) throws {
         }
     }
     
-    let status = app.grouped("status.mineturtle2.dpdns.org")
+    let status = app.grouped("status")
     status.get { req async in
         return Response(status: .ok)
     }

@@ -51,8 +51,20 @@ struct StaticBundleMiddleware: Middleware {
     }
 }
 
-struct SiteMiddleware: Middleware {
-    func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
-        
-    }
-}
+/* struct SubdomainFileMiddleware: Middleware {
+ let subdomain: String
+ let fileMiddleware: FileMiddleware
+ 
+ func respond(to req: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
+ if !subdomain.isEmpty {
+ guard let host = req.headers.first(name: .host)?.lowercased(),
+ host.hasPrefix(subdomain + ".") else {
+ return req.eventLoop.makeFailedFuture(Abort(.notFound))
+ }
+ }
+ 
+ return fileMiddleware.respond(to: req, chainingTo: next)
+ }
+ }
+ */
+
