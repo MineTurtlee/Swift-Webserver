@@ -1,4 +1,4 @@
-h1 {
+/* h1 {
     font-family: "San Francisco";
     font-weight: 400;
 }
@@ -17,9 +17,11 @@ p {
     font-family: "San Francisco";
     font-weight: 400;
 }
-
+*/
 
 * {
-    font-family: "San Francisco";
+    /* font-family: "San Francisco";
     font-weight: 400;
+     */
+    font-family: 'SF UI Display', sans-serif;
 }
