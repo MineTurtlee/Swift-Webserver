@@ -71,6 +71,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  background-color: hsla(28, 28, 28, 0.75)
   backdrop-filter: blur(10px);
   font-family: "San Francisco"
   position: fixed;
@@ -80,8 +81,16 @@ body {
 }
 
 .topbar .img {
-    width: 70px;
+    position:absolute;
+    width: 45px;
     height: auto;
+    border-radius: 30px;
+    margin-left:200px;
+}
+
+.topbar .n2img {
+    margin: 0;
+    padding: 0;
 }
 
 .topbar ul {
@@ -89,22 +98,25 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    backdrop-filter: blur(10px);
+    text-align: center; left-margins: 25px
 }
 
 .topbar li a {
-    border-radius: 5px;
+    border-radius: 10px;
     float: right;
-    display: flex;
     color: white;
     text-align: center;
     padding: 7px 8px;
     text-decoration: none;
-
+    display: inline-block;
 }
 
 .topbar li a:hover {
-    animation: nav-hover 0.5s ease-out 1
+    animation: nav-hover 0.125s forwards
+}
+
+.topbar div {
+    display: flex;
 }
 
 @keyframes nav-hover {
