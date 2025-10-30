@@ -79,15 +79,31 @@ body {
   z-index: 100;
 }
 
-.topbar .logo a {
-    
+.topbar .img {
+    width: 70px;
+    height: auto;
 }
 
-.topbar .nav a {
+.topbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.topbar li a {
     border-radius: 5px;
+    float: right;
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 7px 8px;
+    text-decoration: none;
+
 }
 
-.topbar .nav a:hover {
+.topbar li a:hover {
     animation: nav-hover 0.5s ease-out 1
 }
 
