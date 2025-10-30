@@ -84,7 +84,7 @@ body {
     position:absolute;
     width: 45px;
     height: auto;
-    border-radius: 30px;
+    border-radius: 15px;
     margin-left:200px;
 }
 
@@ -98,7 +98,8 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    text-align: center; left-margins: 25px
+    text-align: center;
+    left-margins: 25px;
 }
 
 .topbar li {
