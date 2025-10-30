@@ -75,9 +75,9 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  width: 100%;
-  padding: 10px 60px;
+  width: 100vw; /* ensures full viewport width */
   height: 70px;
+  padding: 0 4vw; /* use relative padding to scale cleanly */
 
   background: rgba(15, 15, 15, 0.6);
   backdrop-filter: blur(12px);
@@ -86,9 +86,10 @@ body {
 
   color: white;
   font-family: "SF Pro Display", "Inter", sans-serif;
+  box-sizing: border-box;
+  overflow-x: hidden; /* prevents text spill on small screens */
 }
 
-/* everything inside inherits white + no underline */
 .topbar a {
   color: white;
   text-decoration: none;
@@ -99,11 +100,11 @@ body {
   opacity: 0.75;
 }
 
-/* logo + text */
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .brand img {
@@ -118,20 +119,20 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* nav links */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 32px;
   margin: 0;
   padding: 0;
+  flex-shrink: 1;
 }
 
 .nav-links li {
   position: relative;
+  white-space: nowrap;
 }
 
-/* clean underline hover */
 .nav-links a::after {
   content: "";
   position: absolute;
