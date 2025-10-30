@@ -67,21 +67,27 @@ body {
 }
 
 .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(10px);
-  font-family: "San Francisco"
-  top: 0;
-  z-index: 100;
-  width: 80%;
-  margin-right: 125px;
-  margin-left: 125px;
-  margin-bottom: 50px;
-  height: 25px;
-  z-index: 1000;
-  position: sticky;
-  background-color: hsla(21, 21, 21, 0.5)
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* backdrop-filter: blur(10px); */
+    /* font-family: "SF UI Display", sans-serif; */
+    margin-right: 125px;
+    margin-left: 125px;
+    margin-bottom: 50px;
+    height: 25px;
+    z-index: 0;
+    position: sticky;
+    /* background-color: rgba(21, 21, 21, 0.5); */
+    background-color: rgba(21,21,21,0.5);
+    width: 100%;
+    backdrop-filter: blur(10px);
+    height: 40px;
+    color: white;
+}
+
+.topbar * {
+    color: white;
 }
 
 .topbar div {
@@ -108,13 +114,14 @@ body {
 
 .topbar ul {
     list-style-type: none;
-    left-margin: 50px;
+    /* margin-left: 50px; */
     padding: 0;
     overflow: hidden;
     text-align: center;
-    left-margins: 25px;
+    margin-left: 25px;
     display: flex;
     justify-content: space-between;
+
 }
 
 .topbar li {
