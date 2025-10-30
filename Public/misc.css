@@ -70,14 +70,25 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: hsla(28, 28, 28, 0.75)
   backdrop-filter: blur(10px);
   font-family: "San Francisco"
-  position: fixed;
   top: 0;
-  width: 100%;
   z-index: 100;
+  width: 80%;
+  margin-right: 125px;
+  margin-left: 125px;
+  margin-bottom: 50px;
+  height: 25px;
+  z-index: 1000;
+  position: sticky;
+  background-color: hsla(21, 21, 21, 0.5)
+}
+
+.topbar div {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    margin-left: auto;
 }
 
 .topbar img {
@@ -86,11 +97,13 @@ body {
     height: auto;
     border-radius: 8px;
     margin-left:200px;
+    order: 0;
 }
 
 .topbar .n2img {
     margin: 0;
     padding: 0;
+    order: 1;
 }
 
 .topbar ul {
@@ -100,6 +113,8 @@ body {
     overflow: hidden;
     text-align: center;
     left-margins: 25px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .topbar li {
