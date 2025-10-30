@@ -38,15 +38,28 @@ extension ReworkedHTML: AsyncResponseEncodable {
             <html prefix="og: https://ogp.me/ns#">
                 <head>
                     <title>\(title)</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <meta property="og:site_name" content="\(Environment.get("Name") ?? "")" />
                     <meta property="og:title" content="\(title)" />
                     <meta property="og:description" content="\(desc)" />
                     <meta property="og:type" content="\(contentType)" />
-                    <link rel="stylesheet prefetch" href="/fonts.css">
+                    <link href="https://fonts.cdnfonts.com/css/sf-ui-display" rel="stylesheet">
                     <link rel="stylesheet prefetch" href="/styles.css">
                     <link rel="stylesheet prefetch" href="/misc.css">
                 </head>
                 <body>
+                    <nav class="topbar">
+                        <a href="/" class="brand">
+                            <img src="/favicon.ico" alt="sun!!" />
+                            <span>Mineturtlee</span>
+                        </a>
+                        <ul class="nav-links">
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/about">About</a></li>
+                            <li><a href="/projects">Projects</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </nav>
                     \(body)
                 </body>
             </html>

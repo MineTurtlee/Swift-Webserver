@@ -4,15 +4,10 @@ func routes(_ app: Application) throws {
     let origin = "mineturtle2.dpdns.org"
     app.get { req async in
         ReworkedHTML(title: "Mineturtlee's server", body: """
-            <header class="topbar">
-              <div class="logo">
-                <a href="/">Mineturtlee</a>
-              </div>
-              <nav class="nav">
-                <a href="/">Home</a>
-              </nav>
-            </header>
-            <h3 class="indented">Mineturtlee's website</h3>
+            <hero class="align-center">
+                <h3 class="align-left">Mineturtlee</h3>
+                <img src="/favicon.ico" class="align-right"></img>
+            </hero>
             """, desc: "Just a silly website made by Mineturtle2 | Root", contentType: "website")
     }
     
