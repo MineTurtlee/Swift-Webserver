@@ -68,3 +68,35 @@ struct StaticBundleMiddleware: Middleware {
  }
  */
 
+/* struct SubdomainPathRewriteMiddleware: Middleware {
+    private let originDomain = "mineturtle2.dpdns.org"
+
+    func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
+        guard let host = request.headers.first(name: .host)?.lowercased(),
+              host.hasSuffix(originDomain) else {
+            return request.eventLoop.makeFailedFuture(Abort(.badRequest))
+        }
+
+        // Extract subdomain from the host
+        let subdomain = host
+            .replacingOccurrences(of: ".\(originDomain)", with: "")
+            .split(separator: ".")
+            .first.map(String.init)
+
+        guard let subdomain else {
+            // If there's no subdomain (like just mineturtle2.dpdns.org), pass it as-is
+            return next.respond(to: request)
+        }
+
+        // Rewrite the path internally
+        let originalPath = request.url.path
+        let newPath = "/\(subdomain)\(originalPath)"
+
+        // Overwrite the URL path
+        request.url.path = newPath
+
+        // Continue chain
+        return next.respond(to: request)
+    }
+}
+*/

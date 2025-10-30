@@ -72,33 +72,42 @@ extension HTTPMethod {
 }
 
 
-struct SubdomainMiddleware: Middleware {
+struct SubdomainMiddleware: AsyncMiddleware {
     let match: String
+    private let originDomain = "mineturtle2.dpdns.org"
 
-    func respond(to req: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
+    func respond(to req: Request, chainingTo next: any AsyncResponder) async -> Response {
         guard var host = req.headers.first(name: .host)?.lowercased() else {
-            return req.eventLoop.makeFailedFuture(Abort(.badRequest, reason: "Missing host header"))
+            return Response(status: .badRequest)
         }
-        
+
         if let colon = host.firstIndex(of: ":") {
             host = String(host[..<colon])
         }
         
-        if match.isEmpty {
-            if host == "localhost" || host == "[::1]" || host == "127.0.0.1" {
-                return next.respond(to: req)
-            }
-            let parts = host.split(separator: ".")
-            if parts.count > 2 {
-                return req.eventLoop.makeFailedFuture(Abort(.badGateway, reason: "Server error"))
-            }
-        } else {
-            guard host.hasPrefix(match + ".") else {
-                return req.eventLoop.makeFailedFuture(Abort(.notFound))
+        let subdomain = host
+            .replacingOccurrences(of: ".\(originDomain)", with: "")
+            .split(separator: ".")
+            .first.map(String.init)
+        
+        guard let subdomain else {
+            // If there's no subdomain (like just mineturtle2.dpdns.org), pass it as-is
+            do {
+                return try await next.respond(to: req)
+            } catch {
+                return Response(status: .internalServerError)
             }
         }
         
-        return next.respond(to: req)
+        let originalPath = req.url.path
+        let newPath = "/\(subdomain).\(originDomain)/\(originalPath)"
+        req.url.path = newPath
+        
+        do {
+            let res = try await next.respond(to: req)
+            return res
+        } catch {
+            return Response(status: .internalServerError)
+        }
     }
 }
-
