@@ -95,7 +95,7 @@ body {
 
 .topbar ul {
     list-style-type: none;
-    margin: 0;
+    left-margin: 50px;
     padding: 0;
     overflow: hidden;
     text-align: center;
