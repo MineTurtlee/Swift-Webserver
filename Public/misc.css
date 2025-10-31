@@ -80,6 +80,7 @@ body {
 }
 
 
+
 .topbar {
   position: sticky;
   top: 0;
@@ -92,10 +93,11 @@ body {
   padding: 10px 40px;
   height: 70px;
 
-  background: rgba(9, 8, 14, 0.85); /* var(--bg) w/ transparency */
+  background-color: rgba(15, 15, 15, 0.8); /* semi-transparent black */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-muted);
+  color: var(--text);
 
   color: var(--text);
   font-family: "SF Pro Display", "Inter", sans-serif;
@@ -180,6 +182,7 @@ body {
     background-position: center;
     border: none;
     background-color: transparent;
+    color: var(--text)
     cursor: pointer;
     display: none;
 }
@@ -213,12 +216,13 @@ body {
   }
 }
 
-html, body {
+body, html {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  background: var(--bg);
+  background-color: var(--bg-dark);
   color: var(--text);
+  font-family: 'SF Pro Display', sans-serif;
+  overflow-x: hidden;
 }
 
 .root-hero {
@@ -226,6 +230,7 @@ html, body {
     justify-content: space-evenly;
     align-items: flex-start;
     padding: 100px 10%;
+    background-color: var(--bg)
 }
 
 .hero-text {
@@ -240,4 +245,18 @@ html, body {
 .root-hero img {
     width: 25%;
     height: auto;
+}
+
+button, .btn {
+  background-color: var(--primary);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover, .btn:hover {
+  background-color: var(--secondary);
 }

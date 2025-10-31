@@ -25,3 +25,21 @@ p {
      */
     font-family: 'SF UI Display', sans-serif;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text);  /* bright text */
+}
+
+p, li, span {
+  color: var(--text-muted); /* muted text for readability */
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: var(--secondary);
+}
