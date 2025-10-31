@@ -4,7 +4,8 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'Sources/*'
+      - 'Source/*'
+      - '.github/workflows/*'
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
