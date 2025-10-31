@@ -131,11 +131,12 @@ body {
 }
 
 .nav-links {
-  list-style: none;
-  display: flex;
-  gap: 40px; /* was 32px — just a bit more space */
-  margin: 0;
-  padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    max-width: calc(100% - 200px);
 }
 
 .nav-links li {
