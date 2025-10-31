@@ -154,12 +154,16 @@ body {
 }
 
 .menu-toggle {
-    display: none;
-    background: none;
-    border: medium;
-    color: white;
-    font-size: 1.8rem;
+    width: 32px;
+    height: 32px;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW1lbnUtaWNvbiBsdWNpZGUtbWVudSI+PHBhdGggZD0iTTQgNWgxNiIvPjxwYXRoIGQ9Ik00IDEyaDE2Ii8+PHBhdGggZD0iTTQgMTloMTYiLz48L3N2Zz4=");
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: center;
+    border: none;
+    background-color: transparent;
     cursor: pointer;
+    display: none;
 }
 
 @media (max-width: 768px) {
@@ -170,6 +174,7 @@ body {
     .menu-toggle {
         display: block;
     }
+    
     .nav-links {
         position: absolute;
         top: 70px;
