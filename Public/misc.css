@@ -124,7 +124,6 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    padding: 10vw;
 }
 
 .brand span {
@@ -138,7 +137,7 @@ body {
     display: flex;
     gap: 32px;
     margin: 0;
-    padding: 10vw;
+    padding: 0;
     max-width: calc(100% - 200px);
 }
 
@@ -186,9 +185,15 @@ body {
     color: var(--text)
     cursor: pointer;
     display: none;
+    margin-left: 0px !important;
+    margin-right: 10% !important;
 }
 
 @media (max-width: 768px) {
+    .topbar {
+        padding: 10px 5%; /* 5% of screen width, ensures consistent spacing on various devices */
+    }
+    
   .nav-links {
     position: absolute;
     top: 70px;
@@ -199,8 +204,10 @@ body {
     gap: 20px;
     background: var(--bg-dark);
     border-top: 1px solid var(--border-muted);
-    padding: 20px 0;
+    padding: 20px;
+      box-sizing: border-box;
     display: none;
+      margin-right: 5%
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.25s ease;
