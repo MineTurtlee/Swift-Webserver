@@ -53,6 +53,9 @@ extension ReworkedHTML: AsyncResponseEncodable {
                             <img src="/favicon.ico" alt="sun!!" />
                             <span>Mineturtlee</span>
                         </a>
+            
+                        <button class="menu-toggle" aria-label="Toggle menu"></button>
+            
                         <ul class="nav-links">
                             <li><a href="/">Home</a></li>
                             <li><a href="/about">About</a></li>
@@ -61,6 +64,17 @@ extension ReworkedHTML: AsyncResponseEncodable {
                         </ul>
                     </nav>
                     \(body)
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const menuBtn = document.querySelector(".menu-toggle");
+                            const navLinks = document.querySelector(".nav-links");
+
+                            menuBtn.addEventListener("click", () => {
+                                navLinks.classList.toggle("active");
+                            });
+                        });
+                    </script>
+
                 </body>
             </html>
             """
