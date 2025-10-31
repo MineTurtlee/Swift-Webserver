@@ -1,4 +1,4 @@
-.align-center {
+/* .align-center {
     text-align: center;
 }
 
@@ -30,14 +30,14 @@ body {
 }
 */
 
-
+/*
 .dark-mode .button,
 .dark-mode input,
 .dark-mode .lolz {
   border: 1px solid white;
   background-color: #010409; /* Optional: keep background transparent */
-  color: white; /* Optional: ensure text is visible */
-}
+  /* color: white; /* Optional: ensure text is visible */
+/* }
     
 .clock {
   background: linear-gradient(to right, #fffd8f, #8d8325, #fffd8f);
@@ -64,26 +64,43 @@ body {
   100% {
     background-position: 200% 0%;
   }
+} */
+
+:root {
+  --bg-dark: #020108;
+  --bg: #09080E;
+  --bg-light: #17161C;
+  --text: #F4F4FF;
+  --text-muted: #B2B1BE;
+  --highlight: #62606F;
+  --border: #464453;
+  --border-muted: #2B2A38;
+  --primary: #B6B3E9;
+  --secondary: #A4B184;
 }
 
+
 .topbar {
-    position: sticky;
-    top: 0px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 10px 60px;
-    height: 70px;
-    background: rgba(15, 15, 15, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom-width: 1px;
-    border-bottom-style: solid; border-bottom-color: rgba(255, 255, 255, 0.08);
-    color: white;
-    font-family: "SF Pro Display", sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 40px;
+  height: 70px;
+
+  background: rgba(9, 8, 14, 0.85); /* var(--bg) w/ transparency */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-muted);
+
+  color: var(--text);
+  font-family: "SF Pro Display", "Inter", sans-serif;
 }
+
 
 .topbar a {
     color: white;
@@ -96,9 +113,9 @@ body {
 }
 
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .brand img {
@@ -114,12 +131,11 @@ body {
 }
 
 .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 32px;
-    margin-left: 0px;
-    padding-left: 0px;
-    padding-right: 100px;
+  list-style: none;
+  display: flex;
+  gap: 40px; /* was 32px — just a bit more space */
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
@@ -141,17 +157,18 @@ body {
     content: "";
     position: absolute;
     inset: 0px;
-    background-color: rgba(99, 99, 99, 0.25);
+    background-color: var(--highlight);
     border-radius: 8px;
     opacity: 0;
     transition: opacity 0.25s;
     z-index: -1;
 }
 
-.nav-links a:hover::after {
-    opacity: 1;
-    background-color: rgba(99, 99, 99, 0.4);
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--primary);
 }
+
 
 .menu-toggle {
     width: 32px;
@@ -167,45 +184,40 @@ body {
 }
 
 @media (max-width: 768px) {
-    .topbar {
-        padding: 10px 24px;
-    }
-    
-    .menu-toggle {
-        display: block;
-    }
-    
-    .nav-links {
-        position: absolute;
-        top: 70px;
-        left: 0px;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        background: rgba(15, 15, 15, 0.9);
-        border-top-width: 1px;
-        border-top-style: solid;
-        border-top-color: rgba(255, 255, 255, 0.08);
-        padding: 20px 0px;
-        display: none;
-    }
-    
-    .nav-links.active {
-        display: flex;
-    }
-    
-    .nav-links:hover::after {
-        opacity: 1;
-        background-color: rgba(99, 99, 99, 0.4);
-    }
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-muted);
+    padding: 20px 0;
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.25s ease;
+  }
+
+  .nav-links.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 }
+
 html, body {
-    margin: 0px;
-    padding: 0px;
-    overflow-x: hidden;
-    background-color: rgb(10, 10, 10);
-    color: rgb(255, 255, 255);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .root-hero {
