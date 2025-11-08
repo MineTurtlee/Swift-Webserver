@@ -11,7 +11,13 @@ func routes(_ app: Application) throws {
                 </div>
                 <img src="/favicon.ico" class="align-right" />
             </hero>
-            """, desc: "Just a silly website made by Mineturtle2 | Root", contentType: "website")
+            """, desc: "Just a silly website made by Mineturtle2", contentType: "website")
+    }
+    
+    app.get("contact") { req async in
+        ReworkedHTML(title: "Contact | Mineturtlee's server", body:"""
+                        <h1 align="center">hi</h1>
+                        """, desc: "Mineturtlee's contact methods", contentType: "website")
     }
     
     app.on(.brew, "brew", ":type") { req async -> Response in

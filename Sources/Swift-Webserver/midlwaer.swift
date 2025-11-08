@@ -6,97 +6,62 @@
 //
 
 import Vapor
-import Logging
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
-fileprivate let CustomLogger = Logger(label: "Swift-Webserver")
-
-struct StaticBundleMiddleware: Middleware {
-    let bundle: Bundle
-
-    func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
-        var path = request.url.path
-        if path.hasPrefix("/") { path.removeFirst() }
-        if path.isEmpty { path = "abort" }
-
-        if path == "abort" {
-            CustomLogger.warning("Empty path, leaving")
-            return next.respond(to: request)
-        }
-        // if let fileURL = bundle.resourceURL?
-            // .appendingPathComponent("Public")
-            // .appendingPathComponent(path)
-            // .standardizedFileURL,
-           // FileManager.default.fileExists(atPath: fileURL.path) {
-        guard let fileURL = bundle.url(forResource: path, withExtension: nil),
-              let values = try? fileURL.resourceValues(forKeys: [.isRegularFileKey]),
-              values.isRegularFile == true else {
-            CustomLogger.warning("Resource not found or unreadable: \(path)")
-            return next.respond(to: request)
-        }
+struct ErrorHandlerMiddleware: AsyncMiddleware {
+    func respond(to request: Vapor.Request, chainingTo next: any Vapor.AsyncResponder) async throws -> Response {
         do {
-            let data = try Data(contentsOf: fileURL)
-            var response = Response(status: .ok, body: .init(data: data))
-
-            if let type = HTTPMediaType.fileExtension(fileURL.pathExtension) {
-                response.headers.contentType = type
-            }
-
-            response.headers.add(name: .cacheControl, value: "public, max-age=3600")
-            CustomLogger.info("Served embedded resource: \(fileURL.lastPathComponent)")
-            return request.eventLoop.makeSucceededFuture(response)
+            return try await next.respond(to: request)
         } catch {
-            CustomLogger.error("Error loading resource: \(error)")
-            return request.eventLoop.makeFailedFuture(error)
+            return handleError(error, on: request)
         }
+    }
+    
+    private func handleError(_ error: any Error, on request: Request) -> Response {
+        let status: HTTPResponseStatus
+        let reason: String
+        var env: Environment
+        do {
+            env = try Environment.detect()
+        } catch {
+            env = Environment.init(name: "null")
+        }
+
+        switch error {
+        case let abort as any AbortError:
+            status = abort.status
+            reason = abort.reason
+        default:
+            status = .internalServerError
+            reason = error.localizedDescription
+        }
+        
+        if env.name != "null" {
+            if let webhook_url = Environment.get("webhook_url") {
+                // https://discord.com/api/webhooks/1436718869330006148/BZh4MfXi3-70jB5Uaq6DsoonvjwN5ve0V7Iih_LE8QpLPhIwmDZWTGBERBrK7tQh30tV
+                if webhook_url.starts(with: "https://discord.com") {
+                    let url = webhook_url.replacingOccurrences(of: "https://", with: "")
+                    if url.split(separator: "/").count == 5 {
+                        let URL = URL(string: webhook_url)!
+                        var request = URLRequest(url: URL)
+                        request.httpMethod = "POST"
+                        
+                    }
+                }
+            }
+        }
+
+        let responseData = ErrorResponse(error: reason, status: status.code)
+        var response = Response(status: status)
+        try? response.content.encode(responseData)
+        return response
     }
 }
 
-/* struct SubdomainFileMiddleware: Middleware {
- let subdomain: String
- let fileMiddleware: FileMiddleware
- 
- func respond(to req: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
- if !subdomain.isEmpty {
- guard let host = req.headers.first(name: .host)?.lowercased(),
- host.hasPrefix(subdomain + ".") else {
- return req.eventLoop.makeFailedFuture(Abort(.notFound))
- }
- }
- 
- return fileMiddleware.respond(to: req, chainingTo: next)
- }
- }
- */
-
-/* struct SubdomainPathRewriteMiddleware: Middleware {
-    private let originDomain = "mineturtle2.dpdns.org"
-
-    func respond(to request: Request, chainingTo next: any Responder) -> EventLoopFuture<Response> {
-        guard let host = request.headers.first(name: .host)?.lowercased(),
-              host.hasSuffix(originDomain) else {
-            return request.eventLoop.makeFailedFuture(Abort(.badRequest))
-        }
-
-        // Extract subdomain from the host
-        let subdomain = host
-            .replacingOccurrences(of: ".\(originDomain)", with: "")
-            .split(separator: ".")
-            .first.map(String.init)
-
-        guard let subdomain else {
-            // If there's no subdomain (like just mineturtle2.dpdns.org), pass it as-is
-            return next.respond(to: request)
-        }
-
-        // Rewrite the path internally
-        let originalPath = request.url.path
-        let newPath = "/\(subdomain)\(originalPath)"
-
-        // Overwrite the URL path
-        request.url.path = newPath
-
-        // Continue chain
-        return next.respond(to: request)
-    }
+struct ErrorResponse: Content {
+    let error: String
+    let status: UInt
 }
-*/
