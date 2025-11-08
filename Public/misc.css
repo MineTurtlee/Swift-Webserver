@@ -67,16 +67,20 @@ body {
 } */
 
 :root {
-    --bg-dark: #020108;
-    --bg: #09080E;
-    --bg-light: #17161C;
-    --text: #F4F4FF;
-    --text-muted: #B2B1BE;
-    --highlight: #62606F;
-    --border: #464453;
-    --border-muted: #2B2A38;
-    --primary: #B6B3E9;
-    --secondary: #A4B184;
+    --bg-dark: hsl(216 100% 2%);
+    --bg: hsl(208 75% 5%);
+    --bg-light: hsl(206 48% 9%);
+    --text: hsl(207 100% 95%);
+    --text-muted: hsl(206 37% 70%);
+    --highlight: hsl(206 26% 39%);
+    --border: hsl(206 35% 28%);
+    --border-muted: hsl(205 54% 17%);
+    --primary: hsl(206 75% 69%);
+    --secondary: hsl(28 64% 65%);
+    --danger: hsl(9 26% 64%);
+    --warning: hsl(52 19% 57%);
+    --success: hsl(146 17% 59%);
+    --info: hsl(217 28% 65%);
 }
 
 
