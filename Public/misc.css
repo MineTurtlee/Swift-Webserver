@@ -83,8 +83,6 @@ body {
     --info: hsl(217 28% 65%);
 }
 
-
-
 .topbar {
     position: sticky;
     top: 0;
@@ -186,7 +184,7 @@ body {
     background-position: center;
     border: none;
     background-color: transparent;
-    color: var(--text)
+    color: var(--text);
     cursor: pointer;
     display: none;
     margin-left: 0px !important;
@@ -206,6 +204,8 @@ body {
         padding-top: 5vw;
         padding-bottom: 5vw;
         margin: 100px 10%;
+        margin-left: 10vw !important;
+        margin-right: 10vw !important;
     }
     
     .nav-links {
