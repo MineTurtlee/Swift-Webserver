@@ -8,6 +8,7 @@ fileprivate let CustomLogger = Logger(label: "Swift-Webserver")
 @main
 enum Entrypoint {
     static func main() async throws {
+
         var env = try Environment.detect()
         try LoggingSystem.bootstrap(from: &env)
 

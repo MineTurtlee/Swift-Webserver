@@ -4,6 +4,14 @@
 
 ## Getting Started
 
+### Important
+
+Please set up env vars (They are self-explanatory):
+- port
+- serverName
+- webhook_url (Must be created by a bot! Try [this client](https://github.com/aiko-chan-ai/DiscordBotClient) for ease of usage if you don't want to fiddle with coding languages/API)
+
+
 To build the project using the Swift Package Manager, run the following command in the terminal from the root of the project:
 ```bash
 swift build

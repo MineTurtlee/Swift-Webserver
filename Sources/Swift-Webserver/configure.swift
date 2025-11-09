@@ -20,6 +20,7 @@ public func configure(_ app: Application) async throws {
     var CorsMiddleware = CORSMiddleware(configuration: CorsConf)
     app.middleware.use(CorsMiddleware, at: .beginning)
     app.middleware.use(ErrorHandlerMiddleware(), at: .end)
+    app.logger.logLevel = .debug
     // let middleware = StaticBundleMiddleware(bundle: .module)
     // app.middleware.use(middleware)
 
