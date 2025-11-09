@@ -60,11 +60,7 @@ struct ActionRow: Components {
     var custom_id: String? = nil
     
     let type = ComponentsTypes.ActionRow
-    let components: [any Components]
-    
-    func encode(to encoder: any Encoder) throws {
-        
-    }
+    let components: [Button]
 }
 
 enum ButtonStyle: Int, Encodable {

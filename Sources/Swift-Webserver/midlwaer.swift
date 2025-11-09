@@ -16,11 +16,11 @@ struct ErrorHandlerMiddleware: AsyncMiddleware {
         do {
             return try await next.respond(to: request)
         } catch {
-            return handleError(error, on: request)
+            return await handleError(error, on: request)
         }
     }
     
-    private func handleError(_ error: any Error, on request: Request) -> Response {
+    private func handleError(_ error: any Error, on request: Request) async -> Response {
         let status: HTTPResponseStatus
         let reason: String
         var env: Environment
@@ -41,14 +41,30 @@ struct ErrorHandlerMiddleware: AsyncMiddleware {
         
         if env.name != "null" {
             if let webhook_url = Environment.get("webhook_url") {
-                // https://discord.com/api/webhooks/1436718869330006148/BZh4MfXi3-70jB5Uaq6DsoonvjwN5ve0V7Iih_LE8QpLPhIwmDZWTGBERBrK7tQh30tV
                 if webhook_url.starts(with: "https://discord.com") {
                     let url = webhook_url.replacingOccurrences(of: "https://", with: "")
                     if url.split(separator: "/").count == 5 {
                         let URL = URL(string: webhook_url)!
                         var request = URLRequest(url: URL)
                         request.httpMethod = "POST"
-                        var body = WebhookBody(components: [])
+                        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        let button = Button(style: ButtonStyle.secondary, label: "Credits to Mineturtle2", disabled: true)
+                        let text = TextDisplay(content: "## An error occurred! (web)")
+                        let separator = Separator()
+                        let text2 = TextDisplay(content: error.localizedDescription)
+                        let container = Container(components: [text, text2], accent_color: 0xff0000)
+                        let actrow = ActionRow(components: [button])
+                        var body = WebhookBody(content: nil, components: [container, actrow])
+                        let encoder = JSONEncoder()
+                        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+                        var jsonData: Data
+                        do {
+                            jsonData = try encoder.encode(body)
+                            request.httpBody = jsonData
+                            let (data, response) = try await URLSession.shared.data(for: request)
+                        } catch {
+                            // does nothing instead, we alr know
+                        }
                     }
                 }
             }
