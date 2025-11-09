@@ -48,7 +48,7 @@ struct ErrorHandlerMiddleware: AsyncMiddleware {
                         let URL = URL(string: webhook_url)!
                         var request = URLRequest(url: URL)
                         request.httpMethod = "POST"
-                        
+                        var body = WebhookBody(components: [])
                     }
                 }
             }
