@@ -82,7 +82,7 @@ struct ErrorHandlerMiddleware: AsyncMiddleware {
                     var jsonData: Data
                     do {
                         jsonData = try encoder.encode(body)
-                        logger.info("Body: \(String(describing: String(data:jsonData, encoding: .utf8)))")
+                        logger.debug("Body: \(String(describing: String(data:jsonData, encoding: .utf8)))")
                         request.httpBody = jsonData
                         let (data, response) = try await URLSession.shared.data(for: request)
                         /* let resp = response as! HTTPURLResponse
