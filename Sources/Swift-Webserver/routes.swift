@@ -11,6 +11,26 @@ func routes(_ app: Application) throws {
                 </div>
                 <img src="/favicon.ico" class="align-right" />
             </hero>
+            <div>
+                <h1 align="center">Coding Languages</h1><div class="cards">
+                <!-- Coding skills cards -->
+                <div class="card">
+                    <h2 align="center">Python</h2>
+                </div>
+                <div class="card">
+                    <h2 align="center">Swift</h2>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const menuBtn = document.querySelector(".menu-toggle");
+                    const navLinks = document.querySelector(".nav-links");
+
+                    menuBtn.addEventListener("click", () => {
+                        navLinks.classList.toggle("active");
+                    });
+                });
+            </script>
             """, desc: "Just a silly website made by Mineturtle2", contentType: "website")
     }
     

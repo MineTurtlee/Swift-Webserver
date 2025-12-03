@@ -68,16 +68,6 @@ extension ReworkedHTML: AsyncResponseEncodable {
                     <main class="content">
                         \(body)
                     </main>
-                    <div>
-                        <h1 align="center">Coding Languages</h1><div class="cards">
-                        <!-- Coding skills cards -->
-                        <div class="card">
-                            <h2 align="center">Python</h2>
-                        </div>
-                        <div class="card">
-                            <h2 align="center">Swift</h2>
-                        </div>
-                    </div>
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
                             const menuBtn = document.querySelector(".menu-toggle");
