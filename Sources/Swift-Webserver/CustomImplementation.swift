@@ -48,22 +48,26 @@ extension ReworkedHTML: AsyncResponseEncodable {
                     <link rel="stylesheet prefetch" href="/misc.css">
                 </head>
                 <body>
-                    <nav class="topbar">
-                        <a href="/" class="brand">
-                            <img src="/favicon.ico" alt="sun!!" />
-                            <span>Mineturtlee</span>
-                        </a>
+                    <header>
+                        <nav class="topbar">
+                            <a href="/" class="brand">
+                                <img src="/favicon.ico" alt="sun!!" />
+                                <span>Mineturtlee</span>
+                            </a>
             
-                        <button class="menu-toggle" aria-label="Toggle menu"></button>
+                            <button class="menu-toggle" aria-label="Toggle menu"></button>
             
-                        <ul class="nav-links">
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/about">About</a></li>
-                            <li><a href="/projects">Projects</a></li>
-                            <li><a href="/contact">Contact</a></li>
-                        </ul>
-                    </nav>
-                    \(body)
+                            <ul class="nav-links">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/about">About</a></li>
+                                <li><a href="/projects">Projects</a></li>
+                                <li><a href="/contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </header>
+                    <main>
+                        \(body)
+                    </main>
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
                             const menuBtn = document.querySelector(".menu-toggle");
@@ -74,7 +78,6 @@ extension ReworkedHTML: AsyncResponseEncodable {
                             });
                         });
                     </script>
-
                 </body>
             </html>
             """
