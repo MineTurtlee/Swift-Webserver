@@ -48,7 +48,7 @@ extension ReworkedHTML: AsyncResponseEncodable {
                     <link rel="stylesheet prefetch" href="/misc.css">
                 </head>
                 <body>
-                    <header>
+                    <header class="heading">
                         <nav class="topbar">
                             <a href="/" class="brand">
                                 <img src="/favicon.ico" alt="sun!!" />
@@ -65,7 +65,7 @@ extension ReworkedHTML: AsyncResponseEncodable {
                             </ul>
                         </nav>
                     </header>
-                    <main>
+                    <main class="content">
                         \(body)
                     </main>
                     <script>
