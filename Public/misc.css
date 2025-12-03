@@ -175,7 +175,8 @@
     }
 }
 
-body, html {
+body,
+html {
     margin: 0px;
     padding: 0px;
     background-color: var(--bg-dark);
@@ -191,7 +192,7 @@ body, html {
     align-items: flex-start;
     width: 100%;
     padding-bottom: 5vw;
-    background-image: linear-gradient(50deg, #0d7da4, #0817de);
+    background-image: linear-gradient(50deg, rgb(13, 125, 164), rgb(8, 23, 222));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
@@ -210,7 +211,8 @@ body, html {
     height: auto;
 }
 
-button, .btn {
+button,
+.btn {
     background-color: var(--primary);
     color: var(--bg-dark);
     border: medium;
@@ -220,7 +222,8 @@ button, .btn {
     transition: background-color 0.3s;
 }
 
-button:hover, .btn:hover {
+button:hover,
+.btn:hover {
     background-color: var(--secondary);
 }
 
@@ -230,4 +233,32 @@ button:hover, .btn:hover {
     top: 0px;
     z-index: 9999;
     line-height: initial;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+    align-content: center;
+    justify-content: center;
+}
+
+.card {
+    border-radius: 15px;
+    border-width: 2px;
+    transition: transform 0.125s cubic-bezier(0, 0, 0.04, 1.05), box-shadow 0.125s cubic-bezier(0, 0, 0.04, 1.05);
+    transform: translateZ(0px);
+    width: 10vw;
+    align-items: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-image: linear-gradient(206deg, rgb(8, 32, 62), rgb(85, 124, 147));
+    box-sizing: border-box;
+}
+
+.card:hover {
+    border-image: linear-gradient(206deg, rgb(7, 200, 249), rgb(13, 65, 225));
+    transform: translateZ(0px) scale(1.1);
+    border-style: solid;
+    box-shadow: 0 0 20px 5px #07c8f9a0;
 }
