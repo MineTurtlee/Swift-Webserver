@@ -14,30 +14,30 @@ func routes(_ app: Application) throws {
             <div>
                 <h1 align="center">Technologies & Skills</h1><div class="cards">
                 <!-- skills cards -->
-                <div class="card">
-                    <a href="https://python.org">
+                <a href="https://python.org">
+                    <div class="card">
                         <p class="python">python</p>
                         <h2 align="center">Python</h2>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://swift.org">
+                    </div>
+                </a>
+                <a href="https://swift.org">
+                    <div class="card">
                         <p class="swift">swift</p>
                         <h2 align="center">Swift</h2>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://mongodb.com">
+                    </div>
+                </a>
+                <a href="https://mongodb.com">
+                    <div class="card">
                         <p class="mongodb">mongo</p>
                         <h2 align="center">MongoDB</h2>
-                    </a>
-                </div>
-                <div class="card">
-                    <a href="https://javascript.com">
+                    </div>
+                </a>
+                <a href="https://javascript.com">
+                    <div class="card">
                         <p class="js">js</p>
                         <h2 align="center">JavaScript</h2>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
             <script>
                 document.addEventListener("DOMContentLoaded", () => {
