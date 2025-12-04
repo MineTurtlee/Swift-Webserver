@@ -258,6 +258,7 @@ button:hover,
 .card {
     border-radius: 15px;
     border-width: 2px;
+    border: 2px solid transparent;
     transition: transform 0.125s cubic-bezier(0, 0, 0.04, 1.05), box-shadow 0.125s cubic-bezier(0, 0, 0.04, 1.05);
     transform: translateZ(0px);
     width: 10vw;
@@ -269,7 +270,7 @@ button:hover,
 }
 
 .card:hover {
-    border-image: linear-gradient(206deg, rgb(7, 200, 249), rgb(13, 65, 225));
+    border-color: #07c8f9;
     transform: translateZ(0px) scale(1.1);
     border-style: solid;
     box-shadow: 0 0 20px 5px #07c8f9a0;
