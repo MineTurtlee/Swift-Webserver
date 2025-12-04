@@ -15,16 +15,28 @@ func routes(_ app: Application) throws {
                 <h1 align="center">Technologies & Skills</h1><div class="cards">
                 <!-- skills cards -->
                 <div class="card">
-                    <h2 align="center">Python</h2>
+                    <a href="https://python.org">
+                        <p class="python">python</p>
+                        <h2 align="center">Python</h2>
+                    </a>
                 </div>
                 <div class="card">
-                    <h2 align="center">Swift</h2>
+                    <a href="https://swift.org">
+                        <p class="swift">swift</p>
+                        <h2 align="center">Swift</h2>
+                    </a>
                 </div>
                 <div class="card">
-                    <h2 align="center">MongoDB</h2>
+                    <a href="https://mongodb.com">
+                        <p class="mongodb">mongo</p>
+                        <h2 align="center">MongoDB</h2>
+                    </a>
                 </div>
                 <div class="card">
-                    <h2 align="center">JavaScript</h2>
+                    <a href="https://javascript.com">
+                        <p class="js">js</p>
+                        <h2 align="center">JavaScript</h2>
+                    </a>
                 </div>
             </div>
             <script>
