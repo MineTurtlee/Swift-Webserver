@@ -33,7 +33,7 @@ extension ReworkedHTML: AsyncResponseEncodable {
     public func encodeResponse(for request: Request) async throws -> Response {
         var headers = HTTPHeaders()
         headers.add(name: .contentType, value: "text/html")
-        var Prettified = """
+        let Prettified = """
             <!DOCTYPE HTML>
             <html prefix="og: https://ogp.me/ns#">
                 <head>
@@ -46,6 +46,7 @@ extension ReworkedHTML: AsyncResponseEncodable {
                     <link href="https://fonts.cdnfonts.com/css/sf-ui-display" rel="stylesheet">
                     <link rel="stylesheet prefetch" href="/styles.css">
                     <link rel="stylesheet prefetch" href="/misc.css">
+                    <link rel="stylesheet prefetch" href="/images.css">
                 </head>
                 <body>
                     <header class="heading">
