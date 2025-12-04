@@ -12,13 +12,19 @@ func routes(_ app: Application) throws {
                 <img src="/favicon.ico" class="align-right" />
             </hero>
             <div>
-                <h1 align="center">Coding Languages</h1><div class="cards">
-                <!-- Coding skills cards -->
+                <h1 align="center">Technologies & Skills</h1><div class="cards">
+                <!-- skills cards -->
                 <div class="card">
                     <h2 align="center">Python</h2>
                 </div>
                 <div class="card">
                     <h2 align="center">Swift</h2>
+                </div>
+                <div class="card">
+                    <h2 align="center">MongoDB</h2>
+                </div>
+                <div class="card">
+                    <h2 align="center">JavaScript</h2>
                 </div>
             </div>
             <script>

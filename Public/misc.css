@@ -28,7 +28,6 @@
     background-color: rgba(15, 15, 15, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-muted);
     color: var(--text);
     font-family: "SF Pro Display", sans-serif;
 }
@@ -66,8 +65,8 @@
     list-style: none;
     display: flex;
     gap: 32px;
-    margin: 0px;
-    padding: 0px 7vw 0px 0px;
+    margin: 0;
+    padding: 0 7vw 0 0;
     max-width: calc(100% - 200px);
 }
 
@@ -79,28 +78,40 @@
     position: relative;
     display: inline-block;
     padding: 8px 16px;
-    border-radius: 8px;
     color: inherit;
     text-decoration: none;
-    overflow: hidden;
-    transition: color 0.25s;
+
+    /* Remove messy borders */
+    border: none;
+
+    /* Smooth color change */
+    transition: color 0.3s ease;
 }
 
+/* THE UNDERLINE */
 .nav-links a::after {
     content: "";
     position: absolute;
-    inset: 0px;
-    background-color: var(--highlight);
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.25s;
-    z-index: -1;
+    left: 0;
+    bottom: 0;
+
+    height: 2px;
+    width: 0; /* start invisible */
+
+    background: var(--highlight);
+
+    transition: width 0.3s ease-out;
 }
 
+/* HOVER EFFECT */
 .nav-links a:hover {
-    opacity: 1;
     color: var(--primary);
 }
+
+.nav-links a:hover::after {
+    width: 100%; /* grows L → R */
+}
+
 
 .menu-toggle {
     width: 32px;
