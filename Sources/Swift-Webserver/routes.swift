@@ -14,26 +14,26 @@ func routes(_ app: Application) throws {
             <div>
                 <h1 align="center">Technologies & Skills</h1><div class="cards">
                 <!-- skills cards -->
-                <a href="https://python.org">
-                    <div class="card">
+                <a class="card" href="https://python.org">
+                    <div>
                         <p class="python">python</p>
                         <h2 align="center">Python</h2>
                     </div>
                 </a>
-                <a href="https://swift.org">
-                    <div class="card">
+                <a class="card" href="https://swift.org">
+                    <div>
                         <p class="swift">swift</p>
                         <h2 align="center">Swift</h2>
                     </div>
                 </a>
-                <a href="https://mongodb.com">
-                    <div class="card">
+                <a class="card" href="https://mongodb.com">
+                    <div>
                         <p class="mongodb">mongo</p>
                         <h2 align="center">MongoDB</h2>
                     </div>
                 </a>
-                <a href="https://javascript.com">
-                    <div class="card">
+                <a class="card" href="https://javascript.com">
+                    <div>
                         <p class="js">js</p>
                         <h2 align="center">JavaScript</h2>
                     </div>
