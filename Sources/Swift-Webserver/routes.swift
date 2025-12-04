@@ -39,6 +39,15 @@ func routes(_ app: Application) throws {
                     </div>
                 </a>
             </div>
+            <div>
+                <!-- Skills cards 2 -->
+                <a class="card" href="https://discord.com">
+                        <div>
+                            <p class="discord">js</p>
+                            <h2 align="center">Discord</h2>
+                        </div>
+                    </a>
+            </div>
             <script>
                 document.addEventListener("DOMContentLoaded", () => {
                     const menuBtn = document.querySelector(".menu-toggle");
