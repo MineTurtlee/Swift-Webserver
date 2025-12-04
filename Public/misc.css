@@ -256,14 +256,16 @@ button:hover,
 }
 
 .card {
+    display: flex;
     border-radius: 15px;
     border-width: 2px;
     border: 2px solid transparent;
     /* Force Update */
     transition: transform 0.125s cubic-bezier(0, 0, 0.04, 1.05), box-shadow 0.125s cubic-bezier(0, 0, 0.04, 1.05);
     transform: translateZ(0px);
-    width: 10vw;
+    width: 15%;
     align-items: center;
+    flex-direction: column;
     padding-top: 1%;
     padding-bottom: 1%;
     background-image: linear-gradient(206deg, rgb(8, 32, 62), rgb(85, 124, 147));
