@@ -39,7 +39,7 @@ func routes(_ app: Application) throws {
                     </div>
                 </a>
             </div>
-            <div>
+            <div class="cards">
                 <!-- Skills cards 2 -->
                 <a class="card" href="https://discord.com">
                         <div>
